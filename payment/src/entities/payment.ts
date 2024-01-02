@@ -1,9 +1,11 @@
 import { randomUUID } from 'crypto';
+import { PaymentStatus } from './payment-status';
 
 type PaymentProps = {
   orderId: string;
   amount: number;
   paymentDate?: string;
+  status?: PaymentStatus;
 };
 
 export class Payment {
@@ -22,7 +24,18 @@ export class Payment {
     return this.props.amount;
   }
 
+  get orderId(): string {
+    return this.props.orderId;
+  }
+
   get paymentDate(): string | undefined {
     return this.props.paymentDate;
+  }
+
+  authroize() {
+    this.props.status = PaymentStatus.AUTHORIZED;
+  }
+  cancel() {
+    this.props.status = PaymentStatus.CANCELED;
   }
 }

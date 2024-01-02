@@ -41,4 +41,8 @@ export class Order {
   confirm() {
     this.props.status = OrderStatus.CONFIRMED;
   }
+
+  cancel() {
+    this.props.status = OrderStatus.CANCELED;
+  }
 }

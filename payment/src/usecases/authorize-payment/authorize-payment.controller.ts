@@ -14,6 +14,15 @@ export class AuthorizePaymentController {
 
   @MessagePattern('payment.payment.authorize')
   authorizePayment(@Payload() message: AuthorizePaymentMessage) {
+    console.info('Payment Service: authorize payment');
+
     return this.paymentService.authorizePayment(message);
+  }
+
+  @MessagePattern('payment.payment.refund')
+  refund(@Payload() message: AuthorizePaymentMessage) {
+    console.info('Payment Service: refund payment');
+
+    return this.paymentService.refund(message);
   }
 }

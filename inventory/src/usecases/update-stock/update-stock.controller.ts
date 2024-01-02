@@ -18,9 +18,26 @@ export class UpdateStockController {
     private readonly service: ProductServiceInterface,
   ) {}
 
-  @MessagePattern('inventory.stock.update')
-  UpdateStock(@Payload() message: UpdateStockMessage) {
-    this.service.updateStock(
+  @MessagePattern('inventory.stock.reduce')
+  reduceStockQuantity(@Payload() message: UpdateStockMessage) {
+    console.info('Inventory Service: reduce stock quantity');
+
+    this.service.reduceStockQuantity(
+      message.products.reduce(
+        (result, { id, quantity }) => ({ ...result, [id]: quantity }),
+        {},
+      ),
+    );
+    return {
+      success: true,
+    };
+  }
+
+  @MessagePattern('inventory.stock.restock')
+  restockQuantity(@Payload() message: UpdateStockMessage) {
+    console.info('Inventory Service: restock quantity');
+
+    this.service.restockQuantity(
       message.products.reduce(
         (result, { id, quantity }) => ({ ...result, [id]: quantity }),
         {},

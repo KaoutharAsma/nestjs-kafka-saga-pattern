@@ -23,8 +23,6 @@ services:
     volumes:
       - ./inventory:/app
       - /app/node_modules
-    ports:
-      - 3001:3001
     command: [yarn, start:debug]
 
   payment:
@@ -36,8 +34,6 @@ services:
     volumes:
       - ./payment:/app
       - /app/node_modules
-    ports:
-      - 3002:3002
     command: [yarn, start:debug]
 
   broker:
@@ -46,7 +42,7 @@ services:
       - kafka_data:/var/lib/kafka/data
     user: root
     ports:
-      - 9092:9092
+      - 9092
     environment:
       - KAFKA_ENABLE_KRAFT=yes
       - KAFKA_CFG_PROCESS_ROLES=broker,controller

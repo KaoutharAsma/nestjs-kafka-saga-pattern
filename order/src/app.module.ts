@@ -4,6 +4,12 @@ import { Module } from '@nestjs/common';
 import config from './config';
 import { CreateOrderController } from './usecases/create-order/create-order.controller';
 import { OrderService } from './services/order.service';
+import { CreateOrderSaga } from './usecases/create-order/saga/create-order.saga';
+import { PlaceOrderStep } from './usecases/create-order/saga/steps/place-order.step';
+import { CheckProductsAvailibityStep } from './usecases/create-order/saga/steps/check-product-availibilty.step';
+import { AuthorizePaymentStep } from './usecases/create-order/saga/steps/authorize-payment.step';
+import { ConfirmOrderStep } from './usecases/create-order/saga/steps/confirm-order.step';
+import { UpdateStockStep } from './usecases/create-order/saga/steps/update-stock.step';
 
 @Module({
   imports: [
@@ -41,6 +47,30 @@ import { OrderService } from './services/order.service';
     {
       provide: 'order-repository',
       useClass: OrderRepository,
+    },
+    {
+      provide: 'place-order-step',
+      useClass: PlaceOrderStep,
+    },
+    {
+      provide: 'check-products-availibity',
+      useClass: CheckProductsAvailibityStep,
+    },
+    {
+      provide: 'authorize-payment',
+      useClass: AuthorizePaymentStep,
+    },
+    {
+      provide: 'confirm-order',
+      useClass: ConfirmOrderStep,
+    },
+    {
+      provide: 'update-stock',
+      useClass: UpdateStockStep,
+    },
+    {
+      provide: 'create-order-saga',
+      useClass: CreateOrderSaga,
     },
     {
       provide: 'order-service',

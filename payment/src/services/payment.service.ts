@@ -13,7 +13,18 @@ export class PaymentService implements PaymentServiceInterface {
   } {
     // call third party payment provider
 
-    this.paymentRepository.save(new Payment({ ...request }));
+    const payment = new Payment({ ...request })
+    payment.authroize()
+    this.paymentRepository.save(payment);
     return { authorized: true };
+  }
+
+  refund(request: { orderId: string; amount: number }): void {
+    // call third party payment provider
+
+    const payment = this.paymentRepository.findByOrderId(request.orderId);
+    if (!payment) return;
+    payment.cancel()
+    this.paymentRepository.update(payment)
   }
 }

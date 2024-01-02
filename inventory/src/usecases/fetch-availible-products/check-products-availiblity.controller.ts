@@ -12,20 +12,21 @@ type CheckProductsAvailibilityMessage = {
 };
 
 @Controller()
-export class FetchAvailibleProductsController {
+export class CheckProductAvailibityController {
   constructor(
     @Inject('product-service')
     private readonly service: ProductServiceInterface,
   ) {}
 
   @MessagePattern('inventory.products.get')
-  fetchAvailibleProducts(@Payload() message: CheckProductsAvailibilityMessage) {
-    console.log('fetch');
-    return this.service.fetchAvailibleProducts(
-      message.products.reduce(
-        (result, { id, quantity }) => ({ ...result, [id]: quantity }),
-        {},
+  checkProductAvailibity(@Payload() message: CheckProductsAvailibilityMessage) {
+    return {
+      availible: this.service.checkProductAvailibity(
+        message.products.reduce(
+          (result, { id, quantity }) => ({ ...result, [id]: quantity }),
+          {},
+        ),
       ),
-    );
+    };
   }
 }

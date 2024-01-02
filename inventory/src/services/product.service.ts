@@ -9,22 +9,27 @@ export class ProductService implements ProductServiceInterface {
     private productRepository: ProductRepositoryInterface,
   ) {}
 
-  fetchAvailibleProducts(request: { [id: string]: number }): Product[] {
+  checkProductAvailibity(request: { [id: string]: number }): boolean {
     const products = this.productRepository.findMany(Object.keys(request));
-    if (
-      products.every((product) =>
-        product.isStockSufficient(request[product.id]),
-      )
-    ) {
-      console.log(products);
-      return products;
-    }
-
-    return [];
+    return products.every((product) =>
+      product.isStockSufficient(request[product.id]),
+    );
   }
 
-  updateStock(request: { [id: string]: number }): void {
+  reduceStockQuantity(request: { [id: string]: number }): void {
     const products = this.productRepository.findMany(Object.keys(request));
+    products.forEach(
+      (product, index, arr) => (arr[index].quantity -= request[product.id]),
+    );
+    this.productRepository.updateMany(products);
+  }
+
+  restockQuantity(request: { [id: string]: number }): void {
+    const products = this.productRepository.findMany(Object.keys(request));
+    products.forEach(
+      (product, index, arr) => (arr[index].quantity += request[product.id]),
+    );
+
     this.productRepository.updateMany(products);
   }
 }

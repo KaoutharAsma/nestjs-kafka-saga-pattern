@@ -3,7 +3,7 @@ import { randomUUID } from 'crypto';
 type OrderItemProps = {
   productId: string;
   quantity: number;
-  totalPrice?: number;
+  totalPrice: number;
 };
 
 export class OrderItem {
@@ -25,7 +25,7 @@ export class OrderItem {
     return this.props.quantity;
   }
 
-  get totalPrice(): number | undefined {
+  get totalPrice(): number {
     return this.props.totalPrice;
   }
 }

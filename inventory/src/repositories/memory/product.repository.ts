@@ -7,7 +7,7 @@ export class ProductRepository implements ProductRepositoryInterface {
       {
         name: 'Laptop',
         price: 999.99,
-        quantity: 50,
+        quantity: 1,
       },
       'P001',
     ),

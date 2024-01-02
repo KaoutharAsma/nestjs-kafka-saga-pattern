@@ -9,6 +9,8 @@ export class OrderRepository implements OrderRepositoryInterface {
   }
 
   update(order: Order): void {
-    throw new Error('Method not implemented.');
+    const index = this.orders.findIndex((p) => p.id === order.id);
+    if (index < 0) throw new Error('Order Not found');
+    this.orders[index] = order;
   }
 }

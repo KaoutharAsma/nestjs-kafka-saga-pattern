@@ -3,4 +3,5 @@ export const enum OrderStatus {
   CONFIRMED,
   SHIPPED,
   DELIVERED,
+  CANCELED,
 }

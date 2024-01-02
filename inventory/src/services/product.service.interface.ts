@@ -1,6 +1,7 @@
 import { Product } from 'src/entities/product';
 
 export interface ProductServiceInterface {
-  fetchAvailibleProducts(request: { [id: string]: number }): Product[];
-  updateStock(request: { [id: string]: number }): void;
+  checkProductAvailibity(request: { [id: string]: number }): boolean;
+  reduceStockQuantity(request: { [id: string]: number }): void;
+  restockQuantity(request: { [id: string]: number }): void;
 }
