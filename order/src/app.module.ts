@@ -1,8 +1,9 @@
+import { OrderRepository } from './repositories/memory/order.repository';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import config from './config';
+import { CreateOrderController } from './usecases/create-order/create-order.controller';
+import { OrderService } from './services/order.service';
 
 @Module({
   imports: [
@@ -35,7 +36,16 @@ import config from './config';
       },
     ]),
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [CreateOrderController],
+  providers: [
+    {
+      provide: 'order-repository',
+      useClass: OrderRepository,
+    },
+    {
+      provide: 'order-service',
+      useClass: OrderService,
+    },
+  ],
 })
 export class AppModule {}
